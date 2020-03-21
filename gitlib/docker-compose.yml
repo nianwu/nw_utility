@@ -2,16 +2,16 @@ version: "3.6"
 services:
   gitlab:
     image: gitlab/gitlab-ce:latest
-    domainname: gitliab.example.com
+    domainname: gitlab.example.com
     hostname: gitlab.example.com
     ports:
       - "22:22"
       - "80:80"
       - "443:443"
-    volumes:
-      - ./data/data:/var/opt/gitlab
-      - ./data/logs:/var/log/gitlab
-      - ./data/config:/etc/gitlab
+    # volumes:
+    #   - ./data/data:/var/opt/gitlab
+    #   - ./data/logs:/var/log/gitlab
+    #   - ./data/config:/etc/gitlab
     environment:
       GITLAB_OMNIBUS_CONFIG: "from_file('/omnibus_config.rb')"
     configs:
