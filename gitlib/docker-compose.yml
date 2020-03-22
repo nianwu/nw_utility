@@ -24,7 +24,7 @@ services:
       replicas: 4
 configs:
   gitlab:
-    file: ./gitlab/gitlab.rb
+    file: ./gitlab.rb
 secrets:
   gitlab_root_password:
-    file: ./gitlab/root_password.txt
+    file: ./root_password.txt
