@@ -1,6 +1,5 @@
 #! /bin/bash 
 set -e
-mkdir data
-mkdir data/data
-mkdir data/config
-mkdir data/logs
+mkdir -p ~/data/git/gitlab/data
+mkdir -p ~/data/git/gitlab/logs
+mkdir -p ~/data/git/gitlab/config
