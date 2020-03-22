@@ -1,13 +1,11 @@
-version: "3.6"
+version: "3.7"
 services:
   gitlab:
     image: gitlab/gitlab-ce:latest
-    domainname: gitlab.example.com
-    hostname: gitlab.example.com
     ports:
-      - "22:22"
-      - "80:80"
-      - "443:443"
+      - "30001:22"
+      - "30002:80"
+      - "30003:443"
     volumes:
       - ~/data/git/gitlab/data:/var/opt/gitlab
       - ~/data/git/gitlab/logs:/var/log/gitlab
