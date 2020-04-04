@@ -1,1 +1,1 @@
-docker stack deploy --compose-file docker-compose.yml git
+docker stack deploy -c docker-compose.yml git
