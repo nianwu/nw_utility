@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  reverse_proxy:
+    image: reverse_proxy
+    build: 
+      context: ./
+    deploy:
+      ports: 
+        - 80:80
+        - 22:22
+      mode: global
