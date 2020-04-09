@@ -1,0 +1,1 @@
+docker-compose config | docker stack deploy --with-registry-auth -c - nginx
