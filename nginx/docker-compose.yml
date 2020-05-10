@@ -9,5 +9,3 @@ services:
       mode: global
     ports:
       - "80:80"
-      - "2375:2375"
-      - "8080:8080"

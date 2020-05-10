@@ -1,13 +1,21 @@
 version: "3.7"
 services:
-  nodes:
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    image: dockers-node
+  # nodes:
+  #   build:
+  #     context: ./
+  #     dockerfile: Dockerfile
+  #   image: dockers-node
+  #   deploy:
+  #     replicas: 1
+  #     restart_policy:
+  #       condition: on-failure
+  #       max_attempts: 1
+  #   privileged: true
+  registry:
+    image: registry
+    ports: 
+      - 5000
     deploy:
-      replicas: 1
       restart_policy:
         condition: on-failure
         max_attempts: 1
-    privileged: true
