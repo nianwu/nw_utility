@@ -10,23 +10,17 @@ WORKDIR /app
 # 使用官方文档生成代码
 FROM sdk AS code
 ARG IS4_VERSION
-# server
 RUN dotnet new -i IdentityServer4.Templates
-RUN dotnet new is4empty -n IdentityServer \
-    && dotnet new sln -n IdentityServer4 \
-    && dotnet sln add IdentityServer
-# ADD https://raw.githubusercontent.com/IdentityServer/IdentityServer4/${IS4_VERSION}/samples/Quickstarts/1_ClientCredentials/src/IdentityServer/Config.cs IdentityServer/Config.cs
-# ADD https://raw.githubusercontent.com/IdentityServer/IdentityServer4/${IS4_VERSION}/samples/Quickstarts/1_ClientCredentials/src/IdentityServer/Startup.cs IdentityServer/Startup.cs
-# ui
-WORKDIR /src/IdentityServer
-RUN dotnet new is4inmem --force
+# ef server
+RUN dotnet new is4aspid --allow-scripts yes -n IdentityServer --force
 
-# ------------------------- build -------------------------
-FROM sdk AS build
+# ------------------------- restore -------------------------
+FROM sdk AS restore
 COPY --from=code /src/IdentityServer/IdentityServer.csproj IdentityServer/IdentityServer.csproj
-COPY --from=code /src/IdentityServer4.sln IdentityServer4.sln
 RUN dotnet restore IdentityServer/IdentityServer.csproj
 
+# ------------------------- build -------------------------
+FROM resotre AS build
 COPY --from=code /src/IdentityServer/ IdentityServer/
 WORKDIR /src/IdentityServer
 RUN dotnet build
@@ -39,4 +33,5 @@ RUN dotnet publish IdentityServer -c Release -o /app/publish
 # ------------------------- run -------------------------
 FROM base AS finaly
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "IdentityServer.dll"]
+RUN dotnet IdentityServer.dll /seed
+ENTRYPOINT dotnet IdentityServer.dll
