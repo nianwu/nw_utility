@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  identity_server_4:
+    build:
+      context: .
+      args: 
+        IS4_VERSION: ${COMPOSE_IS4_VERSION}
+    image: ${COMPOSE_REGISTRY}/identity_server_4${COMPOSE_SPLITER}is4:${COMPOSE_VERSION}
+    extra_hosts:
+      - "raw.githubusercontent.com:151.101.108.133"
+    healthcheck:
+      test: curl -f http://localhost/.well-known/openid-configuration
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

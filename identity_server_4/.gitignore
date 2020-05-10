@@ -1,0 +1,10 @@
+**/bin/
+**/obj/
+**/*.rsa
+**/*.db
+**/.DS_Store
+**/*.user
+**/*.cache
+.vscode/
+.env
+test
