@@ -1,0 +1,1 @@
+docker-compose config | docker deploy -c - is4
