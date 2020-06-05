@@ -1,0 +1,35 @@
+version: '3.7'
+services:
+  # manager:
+  #   image: docker:${DOCKER_IMAGEVERSION}-dind
+  #   deploy:
+  #     replicas: 3
+  #     restart_policy:
+  #       condition: on-failure
+  #       max_attempts: 1
+  #   privileged: true
+
+  # worker:
+  #   image: docker:${DOCKER_IMAGEVERSION}-dind
+  #   deploy:
+  #     replicas: 3
+  #     restart_policy:
+  #       condition: on-failure
+  #       max_attempts: 1
+  #   privileged: true
+
+  registry:
+    image: registry
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 1
+
+  registry_frontend:
+    image: konradkleine/docker-registry-frontend:v2
+    environment:
+      - ENV_DOCKER_REGISTRY_HOST=registry
+      - ENV_DOCKER_REGISTRY_PORT=5000
+
+networks:
+  development:
