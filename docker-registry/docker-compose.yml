@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+  registry:
+    image: registry
+    ports: 
+      - 5000
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 1
+
+  registry_frontend:
+    image: konradkleine/docker-registry-frontend:v2
+    ports: 
+      - 80
+    environment:
+      - ENV_DOCKER_REGISTRY_HOST=registry
+      - ENV_DOCKER_REGISTRY_PORT=5000
+
+networks:
+  development:
