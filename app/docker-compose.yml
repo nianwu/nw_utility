@@ -1,0 +1,50 @@
+version: '3.7'
+
+services:
+  manager_1:
+    image: docker:19.03.11-dind
+    privileged: true
+    container_name: manager_1
+    environment:
+      DOCKER_TLS_CERTDIR:
+    hostname: manager_1
+
+  manager_2:
+    image: docker:19.03.11-dind
+    privileged: true
+    container_name: manager_2
+    environment:
+      DOCKER_TLS_CERTDIR:
+    hostname: manager_2
+
+  manager_3:
+    image: docker:19.03.11-dind
+    privileged: true
+    container_name: manager_3
+    environment:
+      DOCKER_TLS_CERTDIR:
+    hostname: manager_3
+
+  worker_1:
+    image: docker:19.03.11-dind
+    privileged: true
+    container_name: worker_1
+    environment:
+      DOCKER_TLS_CERTDIR:
+    hostname: worker_1
+
+  worker_2:
+    image: docker:19.03.11-dind
+    privileged: true
+    container_name: worker_2
+    environment:
+      DOCKER_TLS_CERTDIR:
+    hostname: worker_2
+
+  worker_3:
+    image: docker:19.03.11-dind
+    privileged: true
+    container_name: worker_3
+    environment:
+      DOCKER_TLS_CERTDIR:
+    hostname: worker_3
