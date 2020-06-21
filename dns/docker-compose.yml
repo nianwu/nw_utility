@@ -1,0 +1,15 @@
+version: "3.7"
+
+services: 
+  bind:
+    build:
+      context: .
+    image: nianwu/bind:9.11.3-20190706
+    # volumes: 
+    #   - ~/data/dns/bind:/data
+    ports: 
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "30004:10000"
+    environment: 
+      ROOT_PASSWORD: 123123
