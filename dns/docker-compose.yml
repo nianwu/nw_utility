@@ -13,3 +13,7 @@ services:
       - "30004:10000"
     environment: 
       ROOT_PASSWORD: 123123
+
+networks: 
+  gateway_default:
+    external: true

@@ -4,3 +4,9 @@ services:
   gateway:
     image: gateway
     build: .
+    ports: 
+      - 80:80
+
+networks: 
+  default:
+    attachable: true
