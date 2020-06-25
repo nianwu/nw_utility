@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+  registry:
+    image: registry
+    ports: 
+      - 30007:5000
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 1
+    networks: 
+      gateway_default:
+        aliases:
+          - registry.docker.internal
+
+  registry_frontend:
+    image: konradkleine/docker-registry-frontend:v2
+    ports: 
+      - 30006:80
+    environment:
+      - ENV_DOCKER_REGISTRY_HOST=registry
+      - ENV_DOCKER_REGISTRY_PORT=5000
+    networks: 
+      gateway_default:
+        aliases:
+          - ui.registry.docker.internal
+
+networks:
+  gateway_default:
+    external: true

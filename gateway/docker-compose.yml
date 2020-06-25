@@ -1,12 +1,15 @@
-version: "3.7"
+version: '3.7'
 
-services: 
+services:
   gateway:
     image: gateway
     build: .
-    ports: 
+    ports:
       - 80:80
 
-networks: 
+networks:
   default:
     attachable: true
+    ipam:
+      config:
+        - subnet: 10.1.1.0/24
