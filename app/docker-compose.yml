@@ -16,6 +16,8 @@ services:
         aliases:
           - docker
           - node1.manager.docker.internal
+          - manager.docker.internal
+          - docker.internal
 
   manager_2:
     image: docker:19.03.11-dind
@@ -32,6 +34,8 @@ services:
         aliases:
           - docker
           - node2.manager.docker.internal
+          - manager.docker.internal
+          - docker.internal
 
   manager_3:
     image: docker:19.03.11-dind
@@ -48,6 +52,8 @@ services:
         aliases:
           - docker
           - node3.manager.docker.internal
+          - manager.docker.internal
+          - docker.internal
 
   worker_1:
     image: docker:19.03.11-dind
@@ -64,6 +70,8 @@ services:
         aliases:
           - docker
           - node1.worker.docker.internal
+          - worker.docker.internal
+          - docker.internal
 
   worker_2:
     image: docker:19.03.11-dind
@@ -80,6 +88,8 @@ services:
         aliases:
           - docker
           - node2.worker.docker.internal
+          - worker.docker.internal
+          - docker.internal
 
   worker_3:
     image: docker:19.03.11-dind
@@ -96,6 +106,8 @@ services:
         aliases:
           - docker
           - node3.worker.docker.internal
+          - worker.docker.internal
+          - docker.internal
 
 networks:
   gateway_default:
