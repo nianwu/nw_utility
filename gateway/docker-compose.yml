@@ -7,6 +7,10 @@ services:
     ports:
       - 80:80
       - 8888:8888
+    networks: 
+      default:
+        aliases:
+          - registry.docker.internal
 
 networks:
   default:
