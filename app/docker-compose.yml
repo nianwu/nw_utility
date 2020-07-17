@@ -10,6 +10,7 @@ services:
     hostname: manager_1
     ports:
       - 2375
+      - 9001:2375
     networks:
       gateway_default:
         ipv4_address: 10.1.1.21
@@ -28,6 +29,7 @@ services:
     hostname: manager_2
     ports:
       - 2375
+      - 9002:2375
     networks:
       gateway_default:
         ipv4_address: 10.1.1.22
@@ -46,6 +48,7 @@ services:
     hostname: manager_3
     ports:
       - 2375
+      - 9003:2375
     networks:
       gateway_default:
         ipv4_address: 10.1.1.23
@@ -64,6 +67,7 @@ services:
     hostname: worker_1
     ports:
       - 2375
+      - 9004:2375
     networks:
       gateway_default:
         ipv4_address: 10.1.1.24
@@ -82,6 +86,7 @@ services:
     hostname: worker_2
     ports:
       - 2375
+      - 9005:2375
     networks:
       gateway_default:
         ipv4_address: 10.1.1.25
@@ -100,6 +105,7 @@ services:
     hostname: worker_3
     ports:
       - 2375
+      - 9006:2375
     networks:
       gateway_default:
         ipv4_address: 10.1.1.26
