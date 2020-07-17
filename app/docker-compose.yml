@@ -115,6 +115,16 @@ services:
           - worker.docker.internal
           - docker.internal
 
+  ui:
+    image: portainer/portainer
+    command: -H tcp://node1.manager.docker.internal:2375
+    ports: 
+      - 9008:9000
+    networks:
+      gateway_default:
+        aliases:
+          - service.ui.docker.internal
+
 networks:
   gateway_default:
     external: true
