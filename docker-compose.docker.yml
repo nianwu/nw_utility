@@ -1,0 +1,137 @@
+version: "3.7"
+networks:
+  nw_utility_default:
+    external: true
+
+services:
+  manager_1:
+    image: docker:19.03.11-dind
+    privileged: true
+    container_name: manager_1
+    environment:
+      DOCKER_TLS_CERTDIR: # 证书为空, 即不使用https
+    hostname: manager_1
+    ports:
+      - 2375
+      - 9001:2375
+    networks:
+      default:
+        ipv4_address: 10.1.1.21
+        aliases:
+          - docker
+          - node1.manager.docker.internal
+          - manager.docker.internal
+          - docker.internal
+    restart: always
+    volumes: 
+      - ~/data/swarm1/manager_1:/var/lib/docker
+
+  manager_2:
+    image: docker:19.03.11-dind
+    privileged: true
+    container_name: manager_2
+    environment:
+      DOCKER_TLS_CERTDIR:
+    hostname: manager_2
+    ports:
+      - 2375
+      - 9002:2375
+    networks:
+      default:
+        ipv4_address: 10.1.1.22
+        aliases:
+          - docker
+          - node2.manager.docker.internal
+          - manager.docker.internal
+          - docker.internal
+    restart: always
+    volumes: 
+      - ~/data/swarm1/manager_2:/var/lib/docker
+
+  manager_3:
+    image: docker:19.03.11-dind
+    privileged: true
+    container_name: manager_3
+    environment:
+      DOCKER_TLS_CERTDIR:
+    hostname: manager_3
+    ports:
+      - 2375
+      - 9003:2375
+    networks:
+      default:
+        ipv4_address: 10.1.1.23
+        aliases:
+          - docker
+          - node3.manager.docker.internal
+          - manager.docker.internal
+          - docker.internal
+    restart: always
+    volumes: 
+      - ~/data/swarm1/manager_3:/var/lib/docker
+
+  worker_1:
+    image: docker:19.03.11-dind
+    privileged: true
+    container_name: worker_1
+    environment:
+      DOCKER_TLS_CERTDIR:
+    hostname: worker_1
+    ports:
+      - 2375
+      - 9004:2375
+    networks:
+      default:
+        ipv4_address: 10.1.1.24
+        aliases:
+          - docker
+          - node1.worker.docker.internal
+          - worker.docker.internal
+          - docker.internal
+    restart: always
+    volumes: 
+      - ~/data/swarm1/worker_1:/var/lib/docker
+
+  worker_2:
+    image: docker:19.03.11-dind
+    privileged: true
+    container_name: worker_2
+    environment:
+      DOCKER_TLS_CERTDIR:
+    hostname: worker_2
+    ports:
+      - 2375
+      - 9005:2375
+    networks:
+      default:
+        ipv4_address: 10.1.1.25
+        aliases:
+          - docker
+          - node2.worker.docker.internal
+          - worker.docker.internal
+          - docker.internal
+    restart: always
+    volumes: 
+      - ~/data/swarm1/worker_2:/var/lib/docker
+
+  worker_3:
+    image: docker:19.03.11-dind
+    privileged: true
+    container_name: worker_3
+    environment:
+      DOCKER_TLS_CERTDIR:
+    hostname: worker_3
+    ports:
+      - 2375
+      - 9006:2375
+    networks:
+      default:
+        ipv4_address: 10.1.1.26
+        aliases:
+          - docker
+          - node3.worker.docker.internal
+          - worker.docker.internal
+          - docker.internal
+    restart: always
+    volumes: 
+      - ~/data/swarm1/worker_3:/var/lib/docker
