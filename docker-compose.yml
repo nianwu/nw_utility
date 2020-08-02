@@ -166,7 +166,7 @@ services:
     networks:
       default:
         aliases:
-          - service.ui.registry.docker.internal
+          - ui.registry.docker.internal
     restart: always
 
 networks:
