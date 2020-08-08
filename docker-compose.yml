@@ -1,4 +1,4 @@
-version: "3.7"
+version: '3.7'
 
 networks:
   default:
@@ -9,7 +9,7 @@ networks:
 
 services:
   gateway:
-    image: $COMPOSE_REGISTRY/gateway
+    image: $COMPOSE_REGISTRY-gateway
     build: gateway
     ports:
       - 80:80
@@ -32,7 +32,7 @@ services:
         aliases:
           - service.ui.docker.internal
     restart: always
-    volumes: 
+    volumes:
       - $COMPOSE_DATADIR/ui.docker:/data
 
   registry:
@@ -44,7 +44,7 @@ services:
         aliases:
           - service.registry.docker.internal
     restart: always
-    volumes: 
+    volumes:
       - $COMPOSE_DATADIR/registry:/var/lib/registry
 
   registry_frontend:
@@ -59,3 +59,39 @@ services:
         aliases:
           - ui.registry.docker.internal
     restart: always
+
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    ports:
+      - '9010:22'
+      - '9011:80'
+      - '9012:443'
+    volumes:
+      - $COMPOSE_DATADIR/gitlab/data:/var/opt/gitlab
+      - $COMPOSE_DATADIR/gitlab/logs:/var/log/gitlab
+      - $COMPOSE_DATADIR/gitlab/config:/etc/gitlab
+    environment:
+      GITLAB_OMNIBUS_CONFIG: "from_file('/omnibus_config.rb')"
+    configs:
+      - source: gitlab
+        target: /omnibus_config.rb
+    secrets:
+      - gitlab_root_password
+    networks:
+      default:
+        aliases:
+          - gitlab.internal
+          - ui.gitlab.internal
+
+  gitlab-runner:
+    image: gitlab/gitlab-runner:alpine
+    deploy:
+      mode: replicated
+      replicas: 1
+
+configs:
+  gitlab:
+    file: ./gitlab/gitlab.rb
+secrets:
+  gitlab_root_password:
+    file: ./gitlab/root_password.txt

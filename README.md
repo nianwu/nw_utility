@@ -25,3 +25,12 @@
 | :-------: | :------: | :----: | :----: |
 | COMPOSE\_ | DATADIR  | string | ~/data |
 | COMPOSE\_ | REGISTRY | string |        |
+
+## GITLAB
+
+### Runner
+
+- Runner 运行命令
+  ``` sh
+  gitlab-runner register
+  ```

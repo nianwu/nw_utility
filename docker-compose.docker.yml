@@ -1,4 +1,4 @@
-version: "3.7"
+version: '3.7'
 networks:
   nw_utility_default:
     external: true
@@ -23,7 +23,7 @@ services:
           - manager.docker.internal
           - docker.internal
     restart: always
-    volumes: 
+    volumes:
       - $COMPOSE_DATADIR/swarm1/manager_1:/var/lib/docker
 
   manager_2:
@@ -45,7 +45,7 @@ services:
           - manager.docker.internal
           - docker.internal
     restart: always
-    volumes: 
+    volumes:
       - $COMPOSE_DATADIR/swarm1/manager_2:/var/lib/docker
 
   manager_3:
@@ -67,7 +67,7 @@ services:
           - manager.docker.internal
           - docker.internal
     restart: always
-    volumes: 
+    volumes:
       - $COMPOSE_DATADIR/swarm1/manager_3:/var/lib/docker
 
   worker_1:
@@ -89,7 +89,7 @@ services:
           - worker.docker.internal
           - docker.internal
     restart: always
-    volumes: 
+    volumes:
       - $COMPOSE_DATADIR/swarm1/worker_1:/var/lib/docker
 
   worker_2:
@@ -111,7 +111,7 @@ services:
           - worker.docker.internal
           - docker.internal
     restart: always
-    volumes: 
+    volumes:
       - $COMPOSE_DATADIR/swarm1/worker_2:/var/lib/docker
 
   worker_3:
@@ -133,5 +133,5 @@ services:
           - worker.docker.internal
           - docker.internal
     restart: always
-    volumes: 
+    volumes:
       - $COMPOSE_DATADIR/swarm1/worker_3:/var/lib/docker

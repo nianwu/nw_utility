@@ -1,7 +1,7 @@
 mkdir -p \
-    ~/data/gitlib/config \
-    ~/data/gitlib/data \
-    ~/data/gitlib/logs \
+    ~/data/gitlab/data \
+    ~/data/gitlab/logs \
+    ~/data/gitlab/config \
     ~/data/registry \
     ~/data/ui.docker \
     ~/data/swarm1/manager_1 \

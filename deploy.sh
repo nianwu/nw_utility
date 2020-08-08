@@ -1,4 +1,5 @@
 docker-compose build \
+&& docker-compose push \
 &&  docker-compose config | docker stack deploy \
     --prune \
     -c - \
