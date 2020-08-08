@@ -18,3 +18,10 @@
 ├── nfs
 └── redis
 ```
+
+## 配置
+
+|   前缀    |    键    |  类型  |  示例  |
+| :-------: | :------: | :----: | :----: |
+| COMPOSE\_ | DATADIR  | string | ~/data |
+| COMPOSE\_ | REGISTRY | string |        |

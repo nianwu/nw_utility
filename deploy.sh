@@ -3,6 +3,4 @@ docker-compose build \
     --prune \
     -c - \
     --with-registry-auth \
-    nw_utility \
-&& docker-compose -f docker-compose.docker.yml build \
-&& docker-compose -f docker-compose.docker.yml up -d
+    nw_utility

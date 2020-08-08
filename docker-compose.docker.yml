@@ -24,7 +24,7 @@ services:
           - docker.internal
     restart: always
     volumes: 
-      - ~/data/swarm1/manager_1:/var/lib/docker
+      - $COMPOSE_DATADIR/swarm1/manager_1:/var/lib/docker
 
   manager_2:
     image: docker:19.03.11-dind
@@ -46,7 +46,7 @@ services:
           - docker.internal
     restart: always
     volumes: 
-      - ~/data/swarm1/manager_2:/var/lib/docker
+      - $COMPOSE_DATADIR/swarm1/manager_2:/var/lib/docker
 
   manager_3:
     image: docker:19.03.11-dind
@@ -68,7 +68,7 @@ services:
           - docker.internal
     restart: always
     volumes: 
-      - ~/data/swarm1/manager_3:/var/lib/docker
+      - $COMPOSE_DATADIR/swarm1/manager_3:/var/lib/docker
 
   worker_1:
     image: docker:19.03.11-dind
@@ -90,7 +90,7 @@ services:
           - docker.internal
     restart: always
     volumes: 
-      - ~/data/swarm1/worker_1:/var/lib/docker
+      - $COMPOSE_DATADIR/swarm1/worker_1:/var/lib/docker
 
   worker_2:
     image: docker:19.03.11-dind
@@ -112,7 +112,7 @@ services:
           - docker.internal
     restart: always
     volumes: 
-      - ~/data/swarm1/worker_2:/var/lib/docker
+      - $COMPOSE_DATADIR/swarm1/worker_2:/var/lib/docker
 
   worker_3:
     image: docker:19.03.11-dind
@@ -134,4 +134,4 @@ services:
           - docker.internal
     restart: always
     volumes: 
-      - ~/data/swarm1/worker_3:/var/lib/docker
+      - $COMPOSE_DATADIR/swarm1/worker_3:/var/lib/docker

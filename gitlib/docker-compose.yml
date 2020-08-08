@@ -1,15 +1,15 @@
-version: "3.7"
+version: '3.7'
 services:
   gitlab:
     image: gitlab/gitlab-ce:latest
     ports:
-      - "30001:22"
-      - "30002:80"
-      - "30003:443"
+      - '30001:22'
+      - '30002:80'
+      - '30003:443'
     volumes:
-      - ~${DATA}/data:/var/opt/gitlab
-      - ~${DATA}/logs:/var/log/gitlab
-      - ~${DATA}/config:/etc/gitlab
+      - $COMPOSE_DATADIR/gitlib/data:/var/opt/gitlab
+      - $COMPOSE_DATADIR/gitlib/logs:/var/log/gitlab
+      - $COMPOSE_DATADIR/gitlib/config:/etc/gitlab
     environment:
       GITLAB_OMNIBUS_CONFIG: "from_file('/omnibus_config.rb')"
     configs:

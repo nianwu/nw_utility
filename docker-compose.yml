@@ -9,7 +9,7 @@ networks:
 
 services:
   gateway:
-    image: gateway
+    image: $COMPOSE_REGISTRY/gateway
     build: gateway
     ports:
       - 80:80
@@ -33,7 +33,7 @@ services:
           - service.ui.docker.internal
     restart: always
     volumes: 
-      - ~/data/ui.docker:/data
+      - $COMPOSE_DATADIR/ui.docker:/data
 
   registry:
     image: registry
@@ -45,7 +45,7 @@ services:
           - service.registry.docker.internal
     restart: always
     volumes: 
-      - ~/data/registry:/var/lib/registry
+      - $COMPOSE_DATADIR/registry:/var/lib/registry
 
   registry_frontend:
     image: konradkleine/docker-registry-frontend:v2
