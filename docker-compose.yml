@@ -91,6 +91,18 @@ services:
       mode: replicated
       replicas: 1
 
+  mssql:
+    image: registry.cn-beijing.aliyuncs.com/nianwu/mcr.microsoft.com-mssql-server:2019-CU4-ubuntu-16.04
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'QWER1234!!!!'
+    ports:
+      - 9013:1433
+    networks:
+      default:
+        aliases:
+          - mssql.internal
+
 configs:
   gitlab:
     file: ./gitlab/gitlab.rb
