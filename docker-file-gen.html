@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- begin vue -->
+    <!-- dev -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- prod -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <!-- end vue -->
+
+    <!-- begion ele -->
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!-- end ele -->
+
+    <style>
+        .el-select {
+            width: 100%
+        }
+    </style>
+</head>
+
+<body style="width:100%">
+    <div id="app" style="width:100%">
+        <el-card style="width:50%;margin: 0 auto">
+            <el-form :data="form" label-width="80px">
+                <el-form-item label="type" prop="type">
+                    <el-select v-model="form.type">
+                        <el-option v-for="item in ['netcoreapp', 'aspnetcore']" :key="item" :label="item"
+                            :value="item" />
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="version" prop="version">
+                    <el-select v-model="form.version">
+                        <el-option v-for="item in ['3.1']" :key="item" :label="item" :value="item" />
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="input" prop="input">
+                    <el-input v-model="form.input" type="textarea" />
+                </el-form-item>
+                <el-divider></el-divider>
+                <el-form-item v-for="(item, index) in form.folders" :label="index===0 ? '文件夹':''">
+                    <el-input v-model="form.folders[index]" />
+                </el-form-item>
+                <el-form-item>
+                    <el-button @click="form.folders.push('')">+</el-button>
+                </el-form-item>
+                <el-divider></el-divider>
+            </el-form>
+            <el-card>
+                <code>
+                    <p v-for="(item, index) in (render(templates[form.type], form) || '').split('\n')">{{item}}</p>
+                </code>
+            </el-card>
+        </el-card>
+    </div>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                message: "hello word!",
+                form: {
+                    type: "netcoreapp",
+                    version: "3.1",
+                    folders: ['']
+                },
+                placeholders: {
+                    netcoreapp: {
+                        version: "version"
+                    }
+                },
+                templates: {
+                    netcoreapp: `# FROM mcr.microsoft.com/dotnet/core/runtime:$version-buster-slim AS base
+FROM '$registry'/netcore/runtime:$version AS base
+WORKDIR /app
+
+# FROM mcr.microsoft.com/dotnet/core/sdk:$version-buster AS build
+FROM '$registry'/netcore/sdk:$version AS build
+WORKDIR /src
+# COPY nuget.config .
+
+RUN dotnet restore "'$target'/'$target'.csproj"
+WORKDIR "/src/'$target'"
+RUN dotnet build "'$target'.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "'$target'.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "'$target'.dll"]`
+                }
+            },
+            methods: {
+                render(template, dic) {
+                    if (!template) {
+                        return
+                    }
+
+                    for (var key in dic) {
+                        template = template.replace(new RegExp(`\\$${key}`, 'g'), dic[key])
+                    }
+
+                    return template
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>
