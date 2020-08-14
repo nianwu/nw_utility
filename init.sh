@@ -4,6 +4,7 @@ mkdir -p \
     ~/data/gitlab/config \
     ~/data/registry \
     ~/data/ui.docker \
+    ~/data/redis/single \
     ~/data/swarm1/manager_1 \
     ~/data/swarm1/manager_2 \
     ~/data/swarm1/manager_3 \

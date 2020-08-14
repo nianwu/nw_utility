@@ -103,6 +103,19 @@ services:
         aliases:
           - mssql.internal
 
+  redis:
+    image: redis
+    volumes:
+      - $COMPOSE_DATADIR/redis/single:/data
+    entrypoint: redis-server
+    command: ['--appendonly', 'yes']
+    ports:
+      - 9014:6379
+    networks:
+      default:
+        aliases:
+          - redis.internal
+
 configs:
   gitlab:
     file: ./gitlab/gitlab.rb
