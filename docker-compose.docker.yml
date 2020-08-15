@@ -1,7 +1,4 @@
 version: '3.7'
-networks:
-  nw_utility_default:
-    external: true
 
 services:
   manager_1:
@@ -14,13 +11,14 @@ services:
     ports:
       - 9001:2375
     networks:
-      default:
-        ipv4_address: 10.1.1.21
+      nw_utility_default:
         aliases:
           - docker
           - node1.manager.docker.internal
           - manager.docker.internal
           - docker.internal
+      default_swarms:
+        ipv4_address: $COMPOSE_SWARM_SUBNET.21
     restart: always
     volumes:
       - $COMPOSE_DATADIR/swarm1/manager_1:/var/lib/docker
@@ -35,13 +33,14 @@ services:
     ports:
       - 9002:2375
     networks:
-      default:
-        ipv4_address: 10.1.1.22
+      nw_utility_default:
         aliases:
           - docker
           - node2.manager.docker.internal
           - manager.docker.internal
           - docker.internal
+      default_swarms:
+        ipv4_address: $COMPOSE_SWARM_SUBNET.22
     restart: always
     volumes:
       - $COMPOSE_DATADIR/swarm1/manager_2:/var/lib/docker
@@ -56,13 +55,14 @@ services:
     ports:
       - 9003:2375
     networks:
-      default:
-        ipv4_address: 10.1.1.23
+      nw_utility_default:
         aliases:
           - docker
           - node3.manager.docker.internal
           - manager.docker.internal
           - docker.internal
+      default_swarms:
+        ipv4_address: $COMPOSE_SWARM_SUBNET.23
     restart: always
     volumes:
       - $COMPOSE_DATADIR/swarm1/manager_3:/var/lib/docker
@@ -77,13 +77,14 @@ services:
     ports:
       - 9004:2375
     networks:
-      default:
-        ipv4_address: 10.1.1.24
+      nw_utility_default:
         aliases:
           - docker
           - node1.worker.docker.internal
           - worker.docker.internal
           - docker.internal
+      default_swarms:
+        ipv4_address: $COMPOSE_SWARM_SUBNET.24
     restart: always
     volumes:
       - $COMPOSE_DATADIR/swarm1/worker_1:/var/lib/docker
@@ -98,13 +99,14 @@ services:
     ports:
       - 9005:2375
     networks:
-      default:
-        ipv4_address: 10.1.1.25
+      nw_utility_default:
         aliases:
           - docker
           - node2.worker.docker.internal
           - worker.docker.internal
           - docker.internal
+      default_swarms:
+        ipv4_address: $COMPOSE_SWARM_SUBNET.25
     restart: always
     volumes:
       - $COMPOSE_DATADIR/swarm1/worker_2:/var/lib/docker
@@ -119,13 +121,23 @@ services:
     ports:
       - 9006:2375
     networks:
-      default:
-        ipv4_address: 10.1.1.26
+      nw_utility_default:
         aliases:
           - docker
           - node3.worker.docker.internal
           - worker.docker.internal
           - docker.internal
+      default_swarms:
+        ipv4_address: $COMPOSE_SWARM_SUBNET.26
     restart: always
     volumes:
       - $COMPOSE_DATADIR/swarm1/worker_3:/var/lib/docker
+
+networks:
+  default_swarms:
+    attachable: true
+    ipam:
+      config:
+        - subnet: $COMPOSE_SWARM_SUBNET.0/24
+  nw_utility_default:
+    external: true

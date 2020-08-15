@@ -28,6 +28,8 @@ services:
     command: -H tcp://node1.manager.docker.internal:2375
     ports:
       - 9007:9000
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       default:
         aliases:
