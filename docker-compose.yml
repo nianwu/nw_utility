@@ -41,13 +41,12 @@ services:
       - 9007:9000
     volumes: 
       - /var/run/docker.sock:/var/run/docker.sock
+      - $COMPOSE_DATADIR/ui.docker:/data
     networks:
       default:
         aliases:
           - service.ui.docker.internal
     restart: always
-    volumes:
-      - $COMPOSE_DATADIR/ui.docker:/data
 
   registry:
     image: registry
