@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 networks:
   default:
@@ -39,7 +39,7 @@ services:
     image: portainer/portainer
     ports:
       - 9007:9000
-    volumes: 
+    volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - $COMPOSE_DATADIR/ui.docker:/data
     networks:
@@ -77,9 +77,9 @@ services:
   gitlab:
     image: gitlab/gitlab-ce:latest
     ports:
-      - '9010:22'
-      - '9011:80'
-      - '9012:443'
+      - "9010:22"
+      - "9011:80"
+      - "9012:443"
     volumes:
       - $COMPOSE_DATADIR/gitlab/data:/var/opt/gitlab
       - $COMPOSE_DATADIR/gitlab/logs:/var/log/gitlab
@@ -106,10 +106,12 @@ services:
   mssql:
     image: registry.cn-beijing.aliyuncs.com/nianwu/mcr.microsoft.com-mssql-server:2019-CU4-ubuntu-16.04
     environment:
-      ACCEPT_EULA: 'Y'
-      SA_PASSWORD: 'QWER1234!!!!'
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "QWER1234!!!!"
     ports:
       - 9013:1433
+    volumes:
+      - $COMPOSE_DATADIR/mssql:/var/opt/mssql
     networks:
       default:
         aliases:
@@ -120,7 +122,7 @@ services:
     volumes:
       - $COMPOSE_DATADIR/redis/single:/data
     entrypoint: redis-server
-    command: ['--appendonly', 'yes']
+    command: ["--appendonly", "yes"]
     ports:
       - 9014:6379
     networks:

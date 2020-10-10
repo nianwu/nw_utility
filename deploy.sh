@@ -5,6 +5,7 @@ mkdir -p \
     ~/data/registry \
     ~/data/ui.docker \
     ~/data/redis/single \
+    ~/data/mssql \
 && docker-compose build \
 && docker-compose push \
 &&  docker-compose config | docker stack deploy \
