@@ -9,7 +9,7 @@ networks:
 
 services:
   gateway:
-    image: $COMPOSE_REGISTRY-gateway
+    image: $COMPOSE_REGISTRY_PREFIX-gateway:$COMPOSE_VERSION
     build: gateway
     ports:
       - 80:80
@@ -17,10 +17,9 @@ services:
     networks:
       default:
         aliases:
-          - registry.docker.internal
-          - ui.registry.docker.internal
           - ui.docker.internal
           - proxy.internal
+          - registry.internal
     restart: always
 
   portainer_agent:
@@ -52,11 +51,6 @@ services:
     image: registry
     ports:
       - 9008:5000
-    env_file: .env
-    networks:
-      default:
-        aliases:
-          - service.registry.docker.internal
     restart: always
     volumes:
       - $COMPOSE_DATADIR/registry:/var/lib/registry
@@ -68,10 +62,6 @@ services:
     environment:
       - ENV_DOCKER_REGISTRY_HOST=registry
       - ENV_DOCKER_REGISTRY_PORT=5000
-    networks:
-      default:
-        aliases:
-          - ui.registry.docker.internal
     restart: always
 
   gitlab:
@@ -89,6 +79,10 @@ services:
     configs:
       - source: gitlab
         target: /omnibus_config.rb
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 10m
     secrets:
       - gitlab_root_password
     networks:
@@ -103,19 +97,35 @@ services:
       mode: replicated
       replicas: 1
 
-  mssql:
-    image: registry.cn-beijing.aliyuncs.com/nianwu/mcr.microsoft.com-mssql-server:2019-CU4-ubuntu-16.04
+  # mssql:
+  #   image: mcr.microsoft.com/mssql/server:2019-CU8-ubuntu-16.04
+  #   environment:
+  #     ACCEPT_EULA: "Y"
+  #     SA_PASSWORD: "QWER1234!!!!"
+  #   ports:
+  #     - 9013:1433
+  #   volumes:
+  #     - $COMPOSE_DATADIR/mssql:/var/opt/mssql
+  #   deploy:
+  #     restart_policy:
+  #       condition: on-failure
+  #       delay: 10m
+  #   networks:
+  #     default:
+  #       aliases:
+  #         - mssql.internal
+
+  mysql:
+    image: mysql
     environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: "QWER1234!!!!"
-    ports:
-      - 9013:1433
+      MYSQL_ROOT_PASSWORD: "QWER1234!!!!"
     volumes:
-      - $COMPOSE_DATADIR/mssql:/var/opt/mssql
-    networks:
-      default:
-        aliases:
-          - mssql.internal
+      - $COMPOSE_DATADIR/mysql:/var/lib/mysql
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 10m
+        
 
   redis:
     image: redis
