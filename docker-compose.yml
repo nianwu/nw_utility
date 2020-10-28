@@ -17,7 +17,7 @@ services:
     networks:
       default:
         aliases:
-          - ui.docker.internal
+          - portainer.internal
           - proxy.internal
           - registry.internal
     restart: always
@@ -35,16 +35,12 @@ services:
         constraints: [node.platform.os == linux]
 
   portainer:
-    image: portainer/portainer
+    image: portainer/portainer-ce
     ports:
       - 9007:9000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - $COMPOSE_DATADIR/ui.docker:/data
-    networks:
-      default:
-        aliases:
-          - service.ui.docker.internal
+      - $COMPOSE_DATADIR/portainer:/data
     restart: always
 
   registry:
@@ -97,28 +93,29 @@ services:
       mode: replicated
       replicas: 1
 
-  # mssql:
-  #   image: mcr.microsoft.com/mssql/server:2019-CU8-ubuntu-16.04
-  #   environment:
-  #     ACCEPT_EULA: "Y"
-  #     SA_PASSWORD: "QWER1234!!!!"
-  #   ports:
-  #     - 9013:1433
-  #   volumes:
-  #     - $COMPOSE_DATADIR/mssql:/var/opt/mssql
-  #   deploy:
-  #     restart_policy:
-  #       condition: on-failure
-  #       delay: 10m
-  #   networks:
-  #     default:
-  #       aliases:
-  #         - mssql.internal
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-CU8-ubuntu-16.04
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "QWER1234!!!!"
+    ports:
+      - 9013:1433
+    volumes:
+      - $COMPOSE_DATADIR/mssql:/var/opt/mssql
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 10m
+    networks:
+      default:
+        aliases:
+          - mssql.internal
 
   mysql:
     image: mysql
+    command: --default-authentication-plugin=mysql_native_password --lower-case-table-names=1
     environment:
-      MYSQL_ROOT_PASSWORD: "QWER1234!!!!"
+      MYSQL_ROOT_PASSWORD: "qwer1234!!!!"
     volumes:
       - $COMPOSE_DATADIR/mysql:/var/lib/mysql
     deploy:
@@ -126,7 +123,6 @@ services:
         condition: on-failure
         delay: 10m
         
-
   redis:
     image: redis
     volumes:
