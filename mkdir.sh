@@ -6,4 +6,5 @@ mkdir -p \
     ~/data/portainer \
     ~/data/redis/single \
     ~/data/mssql \
-    ~/data/mysql
+    ~/data/mysql \
+    ~/data/mongo

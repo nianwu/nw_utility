@@ -122,7 +122,7 @@ services:
       restart_policy:
         condition: on-failure
         delay: 10m
-        
+
   redis:
     image: redis
     volumes:
@@ -136,9 +136,26 @@ services:
         aliases:
           - redis.internal
 
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 9015:27017
+    volumes:
+      -  $COMPOSE_DATADIR/mongo:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 10m
+
 configs:
   gitlab:
     file: ./gitlab/gitlab.rb
 secrets:
   gitlab_root_password:
     file: ./gitlab/root_password.txt
+
+  
