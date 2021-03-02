@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+  zsh:
+    build:
+      context: 18.04-zsh
+    image: ubuntu:18.04-zsh
+  dapr:
+    build:
+      context: 18.04-dapr
+    depends_on:
+      - zsh
+    image: ubuntu:18.04-dapr
+    privileged: true
+    environment:
+      DOCKER_HOST: manager.docker.internal:2375
+    networks:
+      nw_utility_default:
+
+networks:
+  nw_utility_default:
+    external: true

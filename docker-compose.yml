@@ -60,68 +60,68 @@ services:
       - ENV_DOCKER_REGISTRY_PORT=5000
     restart: always
 
-  gitlab:
-    image: gitlab/gitlab-ce:latest
-    ports:
-      - "9010:22"
-      - "9011:80"
-      - "9012:443"
-    volumes:
-      - $COMPOSE_DATADIR/gitlab/data:/var/opt/gitlab
-      - $COMPOSE_DATADIR/gitlab/logs:/var/log/gitlab
-      - $COMPOSE_DATADIR/gitlab/config:/etc/gitlab
-    environment:
-      GITLAB_OMNIBUS_CONFIG: "from_file('/omnibus_config.rb')"
-    configs:
-      - source: gitlab
-        target: /omnibus_config.rb
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 10m
-    secrets:
-      - gitlab_root_password
-    networks:
-      default:
-        aliases:
-          - gitlab.internal
-          - ui.gitlab.internal
+  # gitlab:
+  #   image: gitlab/gitlab-ce:latest
+  #   ports:
+  #     - "9010:22"
+  #     - "9011:80"
+  #     - "9012:443"
+  #   volumes:
+  #     - $COMPOSE_DATADIR/gitlab/data:/var/opt/gitlab
+  #     - $COMPOSE_DATADIR/gitlab/logs:/var/log/gitlab
+  #     - $COMPOSE_DATADIR/gitlab/config:/etc/gitlab
+  #   environment:
+  #     GITLAB_OMNIBUS_CONFIG: "from_file('/omnibus_config.rb')"
+  #   configs:
+  #     - source: gitlab
+  #       target: /omnibus_config.rb
+  #   deploy:
+  #     restart_policy:
+  #       condition: on-failure
+  #       delay: 10m
+  #   secrets:
+  #     - gitlab_root_password
+  #   networks:
+  #     default:
+  #       aliases:
+  #         - gitlab.internal
+  #         - ui.gitlab.internal
 
-  gitlab-runner:
-    image: gitlab/gitlab-runner:alpine
-    deploy:
-      mode: replicated
-      replicas: 1
+  # gitlab-runner:
+  #   image: gitlab/gitlab-runner:alpine
+  #   deploy:
+  #     mode: replicated
+  #     replicas: 1
 
-  mssql:
-    image: mcr.microsoft.com/mssql/server:2019-CU8-ubuntu-16.04
-    environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: "QWER1234!!!!"
-    ports:
-      - 9013:1433
-    volumes:
-      - $COMPOSE_DATADIR/mssql:/var/opt/mssql
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 10m
-    networks:
-      default:
-        aliases:
-          - mssql.internal
+  # mssql:
+  #   image: mcr.microsoft.com/mssql/server:2019-CU8-ubuntu-16.04
+  #   environment:
+  #     ACCEPT_EULA: "Y"
+  #     SA_PASSWORD: "QWER1234!!!!"
+  #   ports:
+  #     - 9013:1433
+  #   volumes:
+  #     - $COMPOSE_DATADIR/mssql:/var/opt/mssql
+  #   deploy:
+  #     restart_policy:
+  #       condition: on-failure
+  #       delay: 10m
+  #   networks:
+  #     default:
+  #       aliases:
+  #         - mssql.internal
 
-  mysql:
-    image: mysql
-    command: --default-authentication-plugin=mysql_native_password --lower-case-table-names=1
-    environment:
-      MYSQL_ROOT_PASSWORD: "qwer1234!!!!"
-    volumes:
-      - $COMPOSE_DATADIR/mysql:/var/lib/mysql
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 10m
+  # mysql:
+  #   image: mysql
+  #   command: --default-authentication-plugin=mysql_native_password --lower-case-table-names=1
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: "qwer1234!!!!"
+  #   volumes:
+  #     - $COMPOSE_DATADIR/mysql:/var/lib/mysql
+  #   deploy:
+  #     restart_policy:
+  #       condition: on-failure
+  #       delay: 10m
 
   redis:
     image: redis
@@ -130,7 +130,7 @@ services:
     entrypoint: redis-server
     command: ["--appendonly", "yes"]
     ports:
-      - 9014:6379
+      - 6379:6379
     networks:
       default:
         aliases:
@@ -140,9 +140,9 @@ services:
     image: mongo
     restart: always
     ports:
-      - 9015:27017
+      - 27017:27017
     volumes:
-      -  $COMPOSE_DATADIR/mongo:/data/db
+      - $COMPOSE_DATADIR/mongo:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
@@ -157,5 +157,3 @@ configs:
 secrets:
   gitlab_root_password:
     file: ./gitlab/root_password.txt
-
-  
